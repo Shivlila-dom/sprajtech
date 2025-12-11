@@ -1,5 +1,5 @@
 /* ==========================================================================
-   SPRAJTECH - Custom Styles
+   SPRAJTECH - Custom Styles (FIXED FOR MOBILE)
    Author: SPRAJTECH
    Description: Custom CSS for SPRAJTECH Website
    Primary Color: #02affa
@@ -31,10 +31,12 @@
 }
 
 /* ==========================================================================
-   2. Base Styles
+   2. Base Styles - CRITICAL MOBILE FIX
    ========================================================================== */
 
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -43,6 +45,9 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px;
+  overflow-x: hidden !important;
+  width: 100%;
+  max-width: 100%;
 }
 
 body {
@@ -50,7 +55,60 @@ body {
   line-height: 1.6;
   color: var(--gray-700);
   background-color: var(--white);
+  overflow-x: hidden !important;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Prevent horizontal scroll on all elements */
+html,
+body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100vw !important;
+}
+
+/* Fix for any element causing overflow */
+img,
+video,
+iframe,
+embed,
+object {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Container fix */
+.container {
+  width: 100%;
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Section overflow fix */
+section {
   overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Selection */
@@ -66,7 +124,7 @@ body {
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -75,7 +133,7 @@ body {
 
 ::-webkit-scrollbar-thumb {
   background: var(--primary);
-  border-radius: 5px;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -93,12 +151,20 @@ body {
    ========================================================================== */
 
 #preloader {
+  position: fixed;
+  inset: 0;
+  background: var(--secondary);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 #preloader.hidden {
-  opacity: 0;
-  visibility: hidden;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none;
 }
 
 .loader {
@@ -165,6 +231,9 @@ body {
 
 #navbar {
   transition: all 0.3s ease;
+  width: 100%;
+  left: 0;
+  right: 0;
 }
 
 #navbar.scrolled {
@@ -195,6 +264,12 @@ body {
   width: 100%;
 }
 
+/* Mobile Menu */
+#mobile-menu {
+  width: calc(100% - 2rem);
+  margin: 0 auto;
+}
+
 /* ==========================================================================
    6. Animation Classes
    ========================================================================== */
@@ -220,19 +295,15 @@ body {
 .animation-delay-100 {
   animation-delay: 0.1s;
 }
-
 .animation-delay-200 {
   animation-delay: 0.2s;
 }
-
 .animation-delay-300 {
   animation-delay: 0.3s;
 }
-
 .animation-delay-400 {
   animation-delay: 0.4s;
 }
-
 .animation-delay-500 {
   animation-delay: 0.5s;
 }
@@ -284,21 +355,6 @@ body {
   }
 }
 
-/* Pulse Animation */
-.animate-pulse-slow {
-  animation: pulse 3s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
 /* ==========================================================================
    7. Scroll Reveal Animations
    ========================================================================== */
@@ -329,24 +385,19 @@ body {
   transform: translate(0);
 }
 
-/* Staggered Animation for Children */
-.reveal-up.revealed > *:nth-child(1) {
-  transition-delay: 0.1s;
-}
-.reveal-up.revealed > *:nth-child(2) {
-  transition-delay: 0.2s;
-}
-.reveal-up.revealed > *:nth-child(3) {
-  transition-delay: 0.3s;
-}
-.reveal-up.revealed > *:nth-child(4) {
-  transition-delay: 0.4s;
-}
-.reveal-up.revealed > *:nth-child(5) {
-  transition-delay: 0.5s;
-}
-.reveal-up.revealed > *:nth-child(6) {
-  transition-delay: 0.6s;
+/* Mobile: Reduce animation distance */
+@media (max-width: 768px) {
+  .reveal-up {
+    transform: translateY(30px);
+  }
+
+  .reveal-left {
+    transform: translateX(-30px);
+  }
+
+  .reveal-right {
+    transform: translateX(30px);
+  }
 }
 
 /* ==========================================================================
@@ -376,6 +427,7 @@ body {
   border-radius: 9999px;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(2, 175, 250, 0.3);
+  white-space: nowrap;
 }
 
 .btn-primary:hover {
@@ -394,6 +446,7 @@ body {
   font-weight: 600;
   border-radius: 9999px;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .btn-secondary:hover {
@@ -412,6 +465,7 @@ body {
   border: 2px solid var(--gray-600);
   border-radius: 9999px;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .btn-outline:hover {
@@ -430,6 +484,7 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   border: 1px solid var(--gray-100);
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .card:hover {
@@ -492,6 +547,7 @@ body {
 
 .faq-item {
   transition: all 0.3s ease;
+  width: 100%;
 }
 
 .faq-item.active {
@@ -501,6 +557,8 @@ body {
 .faq-question {
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
+  text-align: left;
 }
 
 .faq-question:hover {
@@ -509,6 +567,7 @@ body {
 
 .faq-icon {
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .faq-item.active .faq-icon {
@@ -535,6 +594,7 @@ body {
 
 .gallery-item {
   transition: all 0.5s ease;
+  width: 100%;
 }
 
 .gallery-item.hidden {
@@ -559,6 +619,8 @@ body {
 
 #lightbox-image {
   animation: lightboxFadeIn 0.3s ease;
+  max-width: 90vw;
+  max-height: 80vh;
 }
 
 @keyframes lightboxFadeIn {
@@ -653,38 +715,8 @@ body {
   transform: scale(1.1);
 }
 
-/* Grayscale to Color Effect */
-.img-grayscale {
-  filter: grayscale(100%);
-  transition: filter 0.5s ease;
-}
-
-.img-grayscale:hover {
-  filter: grayscale(0%);
-}
-
 /* ==========================================================================
-   19. Section Styles
-   ========================================================================== */
-
-.section-divider {
-  position: relative;
-}
-
-.section-divider::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  border-radius: 2px;
-}
-
-/* ==========================================================================
-   20. Shadow Utilities
+   19. Shadow Utilities
    ========================================================================== */
 
 .shadow-primary {
@@ -696,7 +728,7 @@ body {
 }
 
 /* ==========================================================================
-   21. Hover Effects
+   20. Hover Effects
    ========================================================================== */
 
 .hover-lift {
@@ -716,301 +748,8 @@ body {
   transform: scale(1.05);
 }
 
-.hover-rotate {
-  transition: transform 0.3s ease;
-}
-
-.hover-rotate:hover {
-  transform: rotate(5deg);
-}
-
 /* ==========================================================================
-   22. Loading Skeleton
-   ========================================================================== */
-
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--gray-200) 25%,
-    var(--gray-100) 50%,
-    var(--gray-200) 75%
-  );
-  background-size: 200% 100%;
-  animation: skeleton-loading 1.5s infinite;
-}
-
-@keyframes skeleton-loading {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-/* ==========================================================================
-   23. Tooltip Styles
-   ========================================================================== */
-
-.tooltip {
-  position: relative;
-}
-
-.tooltip::before {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(-10px);
-  padding: 0.5rem 1rem;
-  background: var(--secondary);
-  color: var(--white);
-  font-size: 0.875rem;
-  white-space: nowrap;
-  border-radius: 0.5rem;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-  z-index: 100;
-}
-
-.tooltip::after {
-  content: "";
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 6px solid transparent;
-  border-top-color: var(--secondary);
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s ease;
-}
-
-.tooltip:hover::before,
-.tooltip:hover::after {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
-}
-
-/* ==========================================================================
-   24. Badge Styles
-   ========================================================================== */
-
-.badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  border-radius: 9999px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.badge-primary {
-  background: rgba(2, 175, 250, 0.1);
-  color: var(--primary);
-}
-
-.badge-success {
-  background: rgba(16, 185, 129, 0.1);
-  color: #10b981;
-}
-
-.badge-warning {
-  background: rgba(245, 158, 11, 0.1);
-  color: #f59e0b;
-}
-
-/* ==========================================================================
-   25. Divider Styles
-   ========================================================================== */
-
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.divider::before,
-.divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: var(--gray-200);
-}
-
-.divider-vertical {
-  width: 1px;
-  height: 100%;
-  background: var(--gray-200);
-}
-
-/* ==========================================================================
-   26. Progress Bar
-   ========================================================================== */
-
-.progress-bar {
-  height: 8px;
-  background: var(--gray-200);
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary), var(--accent));
-  border-radius: 4px;
-  transition: width 1s ease;
-}
-
-/* ==========================================================================
-   27. Typing Effect
-   ========================================================================== */
-
-.typing-effect {
-  overflow: hidden;
-  border-right: 2px solid var(--primary);
-  white-space: nowrap;
-  animation: typing 3s steps(30) infinite,
-    blink 0.5s step-end infinite alternate;
-}
-
-@keyframes typing {
-  from {
-    width: 0;
-  }
-  to {
-    width: 100%;
-  }
-}
-
-@keyframes blink {
-  50% {
-    border-color: transparent;
-  }
-}
-
-/* ==========================================================================
-   28. Glowing Effect
-   ========================================================================== */
-
-.glow {
-  box-shadow: 0 0 20px rgba(2, 175, 250, 0.5);
-}
-
-.glow-pulse {
-  animation: glow-pulse 2s ease-in-out infinite;
-}
-
-@keyframes glow-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 20px rgba(2, 175, 250, 0.5);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(2, 175, 250, 0.8);
-  }
-}
-
-/* ==========================================================================
-   29. Responsive Utilities
-   ========================================================================== */
-
-/* Hide on Mobile */
-@media (max-width: 767px) {
-  .hide-mobile {
-    display: none !important;
-  }
-
-  .text-center-mobile {
-    text-align: center !important;
-  }
-}
-
-/* Hide on Desktop */
-@media (min-width: 768px) {
-  .hide-desktop {
-    display: none !important;
-  }
-}
-
-/* ==========================================================================
-   30. Print Styles
-   ========================================================================== */
-
-@media print {
-  #navbar,
-  #back-to-top,
-  #preloader,
-  .no-print {
-    display: none !important;
-  }
-
-  body {
-    background: white !important;
-    color: black !important;
-  }
-
-  a {
-    text-decoration: underline;
-  }
-
-  .page-break {
-    page-break-before: always;
-  }
-}
-
-/* ==========================================================================
-   31. Accessibility
-   ========================================================================== */
-
-/* Focus Styles */
-:focus-visible {
-  outline: 2px solid var(--primary);
-  outline-offset: 2px;
-}
-
-/* Skip Link */
-.skip-link {
-  position: absolute;
-  top: -100%;
-  left: 0;
-  background: var(--primary);
-  color: var(--white);
-  padding: 1rem;
-  z-index: 10000;
-  transition: top 0.3s;
-}
-
-.skip-link:focus {
-  top: 0;
-}
-
-/* Reduced Motion */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* ==========================================================================
-   32. Dark Mode Support (Optional)
-   ========================================================================== */
-
-@media (prefers-color-scheme: dark) {
-  /* Add dark mode styles here if needed */
-}
-
-/* ==========================================================================
-   33. Mobile Menu Animation
+   21. Mobile Menu Animation
    ========================================================================== */
 
 #mobile-menu {
@@ -1030,190 +769,435 @@ body {
 }
 
 /* ==========================================================================
-   34. Parallax Effect
+   22. CRITICAL MOBILE RESPONSIVE FIXES
    ========================================================================== */
 
-.parallax {
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+/* Prevent horizontal scroll globally */
+@media (max-width: 1024px) {
+  html,
+  body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    position: relative;
+  }
+
+  /* Fix any absolute positioned elements */
+  .absolute {
+    max-width: 100vw;
+  }
 }
+
+/* Mobile specific fixes */
+@media (max-width: 768px) {
+  /* Container padding */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    max-width: 100% !important;
+  }
+
+  /* Hero section text */
+  h1 {
+    font-size: 2rem !important;
+    line-height: 1.2 !important;
+    word-wrap: break-word;
+  }
+
+  h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.3 !important;
+    word-wrap: break-word;
+  }
+
+  h3 {
+    font-size: 1.25rem !important;
+    word-wrap: break-word;
+  }
+
+  /* Paragraphs */
+  p {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  /* Fix floating elements */
+  .absolute.-left-8,
+  .absolute.-right-8,
+  .absolute.-bottom-8,
+  .absolute.-top-8 {
+    display: none !important;
+  }
+
+  /* Grid fixes */
+  .grid {
+    width: 100% !important;
+  }
+
+  /* Flex wrap */
+  .flex {
+    flex-wrap: wrap;
+  }
+
+  /* Button fixes */
+  .flex-col.sm\:flex-row {
+    width: 100%;
+  }
+
+  .flex-col.sm\:flex-row > a,
+  .flex-col.sm\:flex-row > button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Footer fixes */
+  footer .grid {
+    gap: 2rem;
+  }
+
+  /* Stats section */
+  .grid.md\:grid-cols-2.lg\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* Card padding */
+  .p-8 {
+    padding: 1.5rem !important;
+  }
+
+  .p-12 {
+    padding: 2rem !important;
+  }
+
+  .lg\:p-16 {
+    padding: 2rem !important;
+  }
+
+  /* Section padding */
+  .py-20 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .lg\:py-32 {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  /* Background blobs - hide on mobile */
+  .blur-3xl {
+    display: none !important;
+  }
+
+  /* Table/grid overflow */
+  .overflow-x-auto {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Image containers */
+  .rounded-2xl.overflow-hidden {
+    width: 100%;
+  }
+
+  /* Map */
+  iframe {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Small mobile fixes */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.75rem !important;
+  }
+
+  h2 {
+    font-size: 1.35rem !important;
+  }
+
+  .container {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+  }
+
+  /* Smaller buttons on mobile */
+  .px-8 {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+
+  .py-4 {
+    padding-top: 0.875rem !important;
+    padding-bottom: 0.875rem !important;
+  }
+
+  /* Stats grid */
+  .grid.md\:grid-cols-2.lg\:grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .text-5xl.md\:text-6xl {
+    font-size: 2rem !important;
+  }
+
+  /* Business details grid */
+  .grid.md\:grid-cols-2.lg\:grid-cols-4.gap-6 {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .grid.md\:grid-cols-2.lg\:grid-cols-4.gap-6 .p-4 {
+    padding: 0.75rem !important;
+  }
+
+  .grid.md\:grid-cols-2.lg\:grid-cols-4.gap-6 span {
+    font-size: 0.75rem;
+  }
+}
+
+/* ==========================================================================
+   23. Fix Specific Page Elements
+   ========================================================================== */
+
+/* About page floating cards */
+@media (max-width: 768px) {
+  .absolute.-bottom-8.-left-8,
+  .absolute.-bottom-8.-right-8,
+  .absolute.-top-4.-left-4,
+  .absolute.-top-4.-right-4,
+  .absolute.-bottom-6.-left-6,
+  .absolute.-bottom-6.-right-6,
+  .absolute.-top-6.-left-6,
+  .absolute.-top-6.-right-6 {
+    position: relative !important;
+    inset: auto !important;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 200px;
+  }
+}
+
+/* Services page cards grid */
+@media (max-width: 768px) {
+  .grid.md\:grid-cols-2.lg\:grid-cols-3.gap-8 {
+    gap: 1rem;
+  }
+
+  .grid.md\:grid-cols-2.gap-16 {
+    gap: 2rem;
+  }
+
+  .grid.lg\:grid-cols-2.gap-16 {
+    gap: 2rem;
+  }
+}
+
+/* Infrastructure page */
+@media (max-width: 768px) {
+  .grid.grid-cols-3.md\:grid-cols-5.lg\:grid-cols-9 {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+
+  .grid.grid-cols-3.md\:grid-cols-5.lg\:grid-cols-9 .p-4 {
+    padding: 0.5rem !important;
+  }
+
+  .grid.grid-cols-3.md\:grid-cols-5.lg\:grid-cols-9 .w-12 {
+    width: 2rem !important;
+    height: 2rem !important;
+  }
+
+  .grid.grid-cols-3.md\:grid-cols-5.lg\:grid-cols-9 .text-xs {
+    font-size: 0.6rem !important;
+  }
+}
+
+/* Gallery page */
+@media (max-width: 768px) {
+  .gallery-grid,
+  .masonry-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+
+  .gallery-item .aspect-square {
+    aspect-ratio: 1 / 1;
+  }
+
+  .gallery-image-wrapper {
+    border-radius: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery-grid,
+  .masonry-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Contact page */
+@media (max-width: 768px) {
+  .grid.md\:grid-cols-2.lg\:grid-cols-4.gap-6.-mt-32 {
+    margin-top: -2rem;
+    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid.md\:grid-cols-2.lg\:grid-cols-4.gap-6.-mt-32 > div {
+    padding: 1rem !important;
+  }
+}
+
+/* ==========================================================================
+   24. Fix Text Overflow
+   ========================================================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+li {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Long email addresses */
+a[href^="mailto:"],
+a[href^="tel:"] {
+  word-break: break-all;
+}
+
+/* ==========================================================================
+   25. Fix Wave SVG on Mobile
+   ========================================================================== */
 
 @media (max-width: 768px) {
-  .parallax {
-    background-attachment: scroll;
+  .absolute.bottom-0.left-0.w-full svg {
+    height: 40px;
   }
 }
 
 /* ==========================================================================
-   35. Underline Animation
+   26. Accessibility
    ========================================================================== */
 
-.underline-animation {
-  position: relative;
-  display: inline-block;
+/* Focus Styles */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
 }
 
-.underline-animation::after {
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .blur-3xl,
+  .animate-float,
+  .animate-float-delayed {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   27. Print Styles
+   ========================================================================== */
+
+@media print {
+  #navbar,
+  #back-to-top,
+  #preloader,
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* ==========================================================================
+   28. Section Heading (Gallery)
+   ========================================================================== */
+
+.section-heading {
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.section-heading::after {
   content: "";
   position: absolute;
-  width: 100%;
-  height: 2px;
   bottom: 0;
-  left: 0;
-  background: var(--primary);
-  transform: scaleX(0);
-  transform-origin: bottom right;
-  transition: transform 0.3s ease;
-}
-
-.underline-animation:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-
-/* ==========================================================================
-   36. Icon Box
-   ========================================================================== */
-
-.icon-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  border-radius: 1rem;
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  transition: all 0.3s ease;
-}
-
-.icon-box:hover {
-  transform: scale(1.1) rotate(5deg);
-}
-
-.icon-box-outline {
-  background: transparent;
-  border: 2px solid var(--primary);
-}
-
-.icon-box-outline:hover {
-  background: var(--primary);
-}
-
-.icon-box-outline:hover svg {
-  color: var(--white);
-}
-
-/* ==========================================================================
-   37. Ripple Effect
-   ========================================================================== */
-
-.ripple {
-  position: relative;
-  overflow: hidden;
-}
-
-.ripple::after {
-  content: "";
-  position: absolute;
-  top: 50%;
   left: 50%;
-  width: 0;
-  height: 0;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: width 0.6s, height 0.6s;
-}
-
-.ripple:active::after {
-  width: 300px;
-  height: 300px;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 2px;
 }
 
 /* ==========================================================================
-   38. Glass Effect
+   29. Fix CTA Sections on Mobile
    ========================================================================== */
 
-.glass {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.glass-dark {
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* ==========================================================================
-   39. Wave Animation
-   ========================================================================== */
-
-.wave {
-  animation: wave 2s ease-in-out infinite;
-}
-
-@keyframes wave {
-  0%,
-  100% {
-    transform: translateY(0);
+@media (max-width: 768px) {
+  .bg-gradient-to-br.from-primary.to-primary-dark.rounded-3xl {
+    border-radius: 1rem;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    width: calc(100% + 1rem);
   }
-  50% {
-    transform: translateY(-10px);
+
+  /* Fix button stack on mobile */
+  .flex.flex-col.sm\:flex-row.items-center.justify-center.gap-4 {
+    gap: 0.75rem;
+  }
+
+  .flex.flex-col.sm\:flex-row.items-center.justify-center.gap-4 > a {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
   }
 }
 
 /* ==========================================================================
-   40. Custom List Styles
+   30. Footer Mobile Fixes
    ========================================================================== */
 
-.list-check li {
-  position: relative;
-  padding-left: 1.75rem;
-}
+@media (max-width: 768px) {
+  footer .grid.md\:grid-cols-2.lg\:grid-cols-4 {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 
-.list-check li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.375rem;
-  width: 1rem;
-  height: 1rem;
-  background: var(--primary);
-  border-radius: 50%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M5 13l4 4L19 7'%3E%3C/path%3E%3C/svg%3E");
-  background-size: 60%;
-  background-position: center;
-  background-repeat: no-repeat;
-}
+  footer .flex.space-x-4 {
+    justify-content: flex-start;
+  }
 
-/* ==========================================================================
-   PRELOADER FIX
-   ========================================================================== */
-
-#preloader {
-  transition: opacity 0.5s ease, visibility 0.5s ease;
-}
-
-#preloader.hidden {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none;
-}
-
-/* Ensure body doesn't scroll when preloader is visible */
-body.loading {
-  overflow: hidden;
-}
-
-/* Fallback for older browsers */
-.preloader-hidden {
-  display: none !important;
+  footer .border-t.border-gray-800.pt-8.flex {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
 }
 
 /* ==========================================================================
